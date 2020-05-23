@@ -1,0 +1,108 @@
+{% extends 'layout.html' %}
+{% block title %}Administrator Messages{% endblock %}
+{% block content %}
+
+<h2 style="text-align:center;font-size:26px;padding-top: 20px;padding-bottom: 20px;">All Profiles and Groups</h2>
+<div class="main">
+
+  <h4 style="text-align: center;padding: 20px;"> Profiles</h4>
+
+ <table style="text-align:center;">
+  <tr style="padding-bottom: 10px; border: 1px solid black;">
+    <th style="border: 1px solid black;">User ID</th>
+    <th style="border: 1px solid black;">User Name</th>
+    <th style="border: 1px solid black;">Email</th>
+    <th style="border: 1px solid black;">User Type</th> 
+    <th style="border: 1px solid black;">User Score</th> 
+    <th style="border: 1px solid black;">User Status</th> 
+    <th style="border: 1px solid black;">Change Score By</th> 
+    <th style="border: 1px solid black;">Kickout and BlackList</th> 
+
+  </tr>
+
+{% for account in all_accounts %}
+    
+   <tr style="border: 1px solid black;">
+    <td style="border: 1px solid black;">{{account.user_id}}</td>
+    <td style="border: 1px solid black;">{{account.user_name}}</td>
+    <td style="border: 1px solid black;">{{account.email}}</td>
+     <td style="border: 1px solid black;">{{account.user_type}}</td>
+      <td style="border: 1px solid black;">{{account.user_scores}}</td>
+
+      {%if account.user_status == 0 %}
+        <td style="border: 1px solid black;">Blacklisted</td>
+      {%else%}
+          <td style="border: 1px solid black;">Active</td>
+      {%endif%}
+
+   
+    <td style="border: 1px solid black;">
+    <form action="{{ url_for('adminEdit') }}" method="Post"> 
+
+      <select id="score" name ="score" value="score">
+         <option value="-15">-15</option>
+        <option value="-10">-10</option>
+        <option value="-5">-5</option>
+        <option value="-3">-3</option>
+        <option value="-2">-2</option>
+        <option value="-1">-1</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+    </select>
+
+      <input type="hidden" name="user_id" value="{{account.user_id}}" />
+      <input type="hidden" name="user_scores" value="{{account.user_scores}}" />
+    <input type="submit" name= "Submit" value="Submit" />
+</form>
+
+    </td>
+     <td style="border: 1px solid black;">
+    
+    <form action="{{ url_for('adminEdit') }}" method="Post">
+        <input type="hidden" name="user_id" value="{{account.user_id}}" />
+        <input type="hidden" name="email" value="{{account.email}}" /> 
+      <input type="submit" name= "Blacklist" value="Blacklist" />
+</form>
+    </td>
+
+  </tr>
+{% endfor %}
+</table>
+
+  <h4 style="text-align: center;padding: 20px;">Groups</h4>
+
+ <table style="text-align:center;">
+  <tr style="padding-bottom: 10px; border: 1px solid black;">
+    <th style="border: 1px solid black;">Group ID</th>
+    <th style="border: 1px solid black;">Group Name</th>
+    <th style="border: 1px solid black;">Description</th>
+    <th style="border: 1px solid black;">Shut Down</th> 
+
+  </tr>
+
+{% for group in all_groups %}
+    
+   <tr style="border: 1px solid black;">
+    <td style="border: 1px solid black;">{{group.group_id}}</td>
+    <td style="border: 1px solid black;">{{group.group_name}}</td>
+    <td style="border: 1px solid black;">{{group.group_describe}}</td>
+    
+    <td style="border: 1px solid black;">
+    <form action="{{ url_for('adminEdit') }}" method="Post">
+    <input type="hidden" name="group_id" value="{{group.group_id}}" /> 
+    <input type="submit" name= "ShutDownGroup" value="Shutdown" />
+</form>
+    </td>
+  </tr>
+{% endfor %}
+</table>
+
+
+
+</div>
+
+{% endblock %}

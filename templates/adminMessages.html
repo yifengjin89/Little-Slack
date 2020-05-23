@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% block title %}Administrator Messages{% endblock %}
+{% block content %}
+
+<h2 style="text-align:center;font-size:26px;padding-top: 20px;padding-bottom: 20px;">Messages from users and visitors</h2>
+<div class="main">
+  <h2 style="text-align:center;font-size:26px;padding-top: 20px;padding-bottom: 20px;">Complaints and Appeals</h2>
+
+ <table style="text-align:center;">
+  <tr style="padding-bottom: 10px; border: 1px solid black;">
+    <th style="border: 1px solid black;">Name of User/Visitor</th>
+    <th style="border: 1px solid black;"> Message</th>
+    <th style="border: 1px solid black;">Delete</th> 
+  </tr>
+
+{% for message in messages %}
+    
+   <tr style="border: 1px solid black;">
+    <td style="border: 1px solid black;">{{message.message_name}}</td>
+    <td style="border: 1px solid black;">{{message.message_content}}</td>
+   
+    <td style="border: 1px solid black;">
+    <form action="{{ url_for('adminMessages') }}" method="Post">
+        <input type="hidden" name="message_id" value="{{message.message_id}}" />  
+    <input type="submit" name= "Deletemessage" value="Delete" />
+</form>
+    </td>
+
+
+  </tr>
+{% endfor %}
+</table>
+
+<h2 style="text-align:center;font-size:26px;padding-top: 20px;padding-bottom: 20px;">Compliments Sent</h2>
+
+
+
+ <table style="text-align:center;">
+  <tr style="padding-bottom: 10px; border: 1px solid black;">
+    <th style="border: 1px solid black;">Sender ID</th>
+    <th style="border: 1px solid black;"> Message</th>
+    <th style="border: 1px solid black;">Receiver ID</th> 
+        <th style="border: 1px solid black;">Delete</th> 
+
+  </tr>
+
+{% for compliment in compliments %}
+    
+   <tr style="border: 1px solid black;">
+    <td style="border: 1px solid black;">{{compliment.compliment_sender}}</td>
+    <td style="border: 1px solid black;">{{compliment.compliment_content}}</td>
+        <td style="border: 1px solid black;">{{compliment.compliment_getter}}</td>
+   
+    <td style="border: 1px solid black;">
+    <form action="{{ url_for('adminMessages') }}" method="Post">
+        <input type="hidden" name="compliment_id" value="{{compliment.compliment_id}}" />  
+    <input type="submit" name= "Deletecompliment" value="Delete" />
+</form>
+    </td>
+
+
+  </tr>
+{% endfor %}
+</table>
+
+</div>
+
+{% endblock %}

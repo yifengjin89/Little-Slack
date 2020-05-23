@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block title %}Message the Super Users{% endblock %}
+{% block content %}
+			<h2 class="page-title">Message the Super User</h2>
+            <h5 style="text-align: center;">Send your Complaints and Appeals here</h5>
+            <form action="{{ url_for('messageSU') }}" method="post" autocomplete="off">
+                <div class="form-container" >
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Enter your name, indicate whether you are a user or visitor" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="content"  rows="10" placeholder="Enter your complaint / appeal here .... be specific with names and dates that can be backed up if you wish to be taken seriously"
+                                  class="form-control" required></textarea>
+                    </div>
+                        <div class="form-group">
+                            <div class="msg">{{ msg }}</div>
+                            <button class="btn btn-primary btn-block">Send</button>
+                        </div>
+                </div>
+            </form>
+{% endblock %}

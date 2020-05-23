@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block title %}Administrator Site{% endblock %}
+{% block content %}
+
+<div class='register'>
+			<h1 style='text-align: center;padding: 20px;'>Admin Pages</h1>
+			<div class="links">
+				<a class = 'active' href="{{ url_for('admin') }}" style='text-align: center;padding: 20px;'>Pending Users</a></br>
+				<a class = 'active' href="{{ url_for('adminEdit') }}" style='text-align: center;padding: 20px;' >Edit Users and Groups</a></br>
+				<a class = 'active' href="{{ url_for('adminMessages') }}" style='text-align: center;padding: 20px;'>Messages to SU</a>
+
+			</div>
+
+		
+</div>
+{%endblock%}

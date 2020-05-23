@@ -1,0 +1,116 @@
+{% extends 'layout.html' %}
+{% block title %}WhiteBoard Home{% endblock %}
+{% block nav %}
+<a href="{{ url_for('post') }}"><i class="fas fa-post"></i>Post</a>
+{% endblock %}
+
+{% block content %}
+ <div class="show-message" style="text-align: center; width: 360px; margin:0 auto;">  <!-- flash error messages -->
+     {% with messages = get_flashed_messages() %}
+     {% if messages %}
+     {% for message in messages %}
+     <div class="alert alert-warning alert-dismissible" role="alert">
+         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+             <span aria-hidden="true">×</span></button>
+             {{ message }}
+     </div>
+     {% endfor %}
+     {% endif %}
+     {% endwith %}
+ </div>
+
+<div class="container clearfix">
+    <div class="left-home"> <!-- left side start-->
+        <h2>Top VIP Profile</h2>
+        {% if top_VIP %}
+            {% for vip in top_VIP %}
+                <div class="top-user">
+                    <table>
+                        <tr>
+                            <td>Username:</td>
+                            <td><a href="{{ url_for('poster_profile', poster_id=vip.user_id) }}">
+                                {{ vip.user_name }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>User Type:</td>
+                            <td>{{ vip.user_type }}</td>
+                        </tr>
+                        <tr>
+                            <td>Reputation:</td>
+                            <td>&nbsp;{{ vip.user_scores }}</td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td>{{ vip.email }}</td>
+                        </tr>
+                    </table>
+                    <hr>
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+            <h4>Current No VIP Profile</h4>
+            <hr>
+        {% endif %}
+
+        <h2>Top Ordinary User Profile</h2>
+        {% if top_OU %}
+            {% for ou in top_OU %}
+                <div class="top-user">
+                    <table>
+                        <tr>
+                            <td>Username:</td>
+                            <td><a href="{{ url_for('poster_profile', poster_id=ou.user_id) }}">
+                                {{ ou.user_name }}</a></td>
+                        </tr>
+                        <tr>
+                            <td>User Type:</td>
+                            <td>{{ ou.user_type }}</td>
+                        </tr>
+                        <tr>
+                            <td>Reputation:</td>
+                            <td>&nbsp;{{ ou.user_scores }}</td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td>{{ ou.email }}</td>
+                        </tr>
+                    </table>
+                    <hr>
+                </div>
+              {% endfor %}
+        {% else %}
+            <h4>Current No Ordinary User Profile</h4>
+        {% endif %}
+
+    </div>
+ <div class="right-home">
+
+<h2 class="text-center">Top Rated Post</h2>
+<div class="main">
+{% for ps in post %}    <!--loop to show all posts-->
+    {% if ps.flag %}    <!-- if flag in the post( the 4th post) , show below messages -->
+        <h6>=================================================================</h6>
+        <h4 style="text-align: center">General Post ↓↓↓</h4>
+        <h6>=================================================================</h6>
+    {% endif %}
+   <ul>             <!-- post part -->
+        <li>
+            <div class="post-group">
+                <p class="post-title"><a href="{{ url_for('into_reply', post_id=ps.post_id) }}">
+                    {{ ps.post_title }}</a></p>
+                <P class="post-content">{{ ps.post_content }}</P>
+                <div class="post-info">
+                    <span class="post-author"><a href="{{ url_for('poster_profile', poster_id=ps.user_id) }}">
+                        {{ ps.user_name }}</a></span>
+                    <span class="post-time">{{ ps.post_time }}</span>
+                </div>
+            </div>
+        </li>
+   </ul>
+{% endfor %}  <!-- end loop -->
+</div>
+ </div>
+</div>
+{% endblock %}
